@@ -60,3 +60,33 @@ The following reosurces can be used to create sock puppets:
   - Generates random images of people using AI
 - Proxy credit card: https://privacy.com/
   - Provides virtual credit card numbers for online transactions
+
+### Anonymizing Internet-Based Traffic
+
+When using a VPN, ensure your DNS traffic is not leaking outside the VPN tunnel. Use tools like DNS Leak Test (https://www.dnsleaktest.com/) to check for leaks.
+
+#### Proxychains
+
+Penetration testers use proxychains to route their traffic through multiple proxies, making it difficult to trace back to the original source. Proxychains allow a penetration tester to configure various types of proxies:
+- HTTP
+- HTTPS
+- SOCKS4
+- SOCKS5
+
+<img src="images/1746522974463.png" alt="Proxychains" width="550"/>
+
+**NOTE:** The website, https://spys.one/en/, provides a list of free proxy servers.
+
+To get started with proxychains, (assuming you have already installed it), update the configuration file located at `/etc/proxychains4.conf` to use `dynamic_chain`.
+
+<img src="images/1746523341324.png" alt="Proxychains Configuration" width="450"/>
+
+Then scroll down to the section labeled `[ProxyList]` and comment out the `socks4` line and insert each proxy server you want to use in the following format:  
+
+<img src="images/1746527068069.png" alt="Proxychains Configuration Example" width="350"/>
+
+Before running proxychains, run the following command to verify your current public IPv4 address:
+
+```bash
+curl ifconfig.co
+```
