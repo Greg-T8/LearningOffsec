@@ -2,6 +2,16 @@
 
 <img src="images/1746092403966.png" alt="The Ultimate Kali Linux Book" width="350"/>
 
+<!-- omit in toc -->
+## Contents
+
+- [Chapter 4. Passive Reconnaissance](#chapter-4-passive-reconnaissance)
+  - [Exploring Passive Reconnaissance](#exploring-passive-reconnaissance)
+  - [Creating a Sock Puppet](#creating-a-sock-puppet)
+  - [Anonymizing Internet-Based Traffic](#anonymizing-internet-based-traffic)
+    - [Proxychains](#proxychains)
+
+
 ## Chapter 4. Passive Reconnaissance
 
 Types of information that may be exploited:
@@ -63,7 +73,9 @@ The following reosurces can be used to create sock puppets:
 
 ### Anonymizing Internet-Based Traffic
 
-When using a VPN, ensure your DNS traffic is not leaking outside the VPN tunnel. Use tools like DNS Leak Test (https://www.dnsleaktest.com/) to check for leaks.
+When using a VPN, ensure your DNS traffic is not leaking outside the VPN tunnel. Use tools like DNS Leak Test  to check for leaks:
+
+- https://www.dnsleaktest.com/
 
 #### Proxychains
 
@@ -75,18 +87,56 @@ Penetration testers use proxychains to route their traffic through multiple prox
 
 <img src="images/1746522974463.png" alt="Proxychains" width="550"/>
 
-**NOTE:** The website, https://spys.one/en/, provides a list of free proxy servers.
+**Finding Free Proxy Servers**: The following website provides a list of free proxy servers:
+
+- https://spys.one/en/
+
+This site uses the following proxy protocols:
+
+| Feature                    | SOCKS5 Proxy                                                  | HTTP Proxy                                                        | HTTPS Proxy                                                                                       |
+| :------------------------- | :------------------------------------------------------------ | :---------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| **Purpose**                | General-purpose proxy; works with any traffic type (TCP, UDP) | Web traffic only (HTTP)                                           | Secure web traffic (HTTPS)                                                                        |
+| **Protocol Awareness**     | Not aware of application protocols like HTTP/HTTPS            | Understands HTTP (can interpret, modify, or filter HTTP requests) | Understands HTTPS (can recognize encrypted traffic but typically can't see inside)                |
+| **Encryption**             | No built-in encryption (just relays data)                     | No encryption                                                     | Depends: encrypts *after* the proxy (client ↔ proxy is usually plain unless using CONNECT method) |
+| **Speed**                  | Very fast (minimal processing)                                | Fast, with potential overhead                                     | Slightly slower due to encryption negotiations                                                    |
+| **Typical Use Cases**      | Torrenting, gaming, SSH relays, general non-web traffic       | Web browsing without SSL (old websites, simple proxying)          | Secure browsing, accessing HTTPS websites through a proxy                                         |
+| **Authentication Support** | Yes (username/password optional)                              | Sometimes                                                         | Sometimes                                                                                         |
+
+**In short:**
+- **SOCKS5** is a **raw tunnel**:
+  It doesn't care if you're browsing the web, transferring a file, or gaming. It just blindly forwards whatever you send through it. Think of it like a dumb messenger that carries sealed envelopes without peeking inside.
+- **HTTP** is specifically for **websites that use regular HTTP (port 80)**:
+  The proxy *understands* web traffic, meaning it can modify, cache, or log your web requests. But it's *not secure* because it's not encrypted.
+- **HTTPS** proxies are designed for **secure websites (port 443)**:
+  They forward encrypted traffic to HTTPS sites. They usually use a "CONNECT" method to establish a tunnel. Your browser does encryption, not the proxy itself, so the proxy doesn't see inside the encrypted communication (unless it's doing "SSL interception," but that's more advanced and rare for public proxies).
 
 To get started with proxychains, (assuming you have already installed it), update the configuration file located at `/etc/proxychains4.conf` to use `dynamic_chain`.
 
 <img src="images/1746523341324.png" alt="Proxychains Configuration" width="450"/>
 
-Then scroll down to the section labeled `[ProxyList]` and comment out the `socks4` line and insert each proxy server you want to use in the following format:  
+Then scroll down to the section labeled `[ProxyList]`. Comment out the `socks4` line and insert each proxy server you want to use in the following format:  
 
-<img src="images/1746527068069.png" alt="Proxychains Configuration Example" width="350"/>
-
-Before running proxychains, run the following command to verify your current public IPv4 address:
-
+```bash
+[ProxyList]
+socks5  23.81.207.111   5256
+socks5  98.175.31.195   4145
+socks5  67.201.39.14    4145
+socks5  104.168.13.108  1080
+```
+Before using `proxychains`, retrieve your real public IP address:
 ```bash
 curl ifconfig.co
 ```
+
+Then run a command through `proxychains` to see if your IP address changes:
+```bash
+proxychains4 -f /etc/proxychains4.conf curl ifconfig.co
+```
+
+You can launch other applications through `proxychains` as well:
+```bash
+proxychains4 -f /etc/proxychains4.conf firefox
+```
+<img src="images/1746876109281.png" alt="Proxychains Firefox" width="750"/>
+
+**Note:** The public IP address reflects the last IP address used in the proxy list.
