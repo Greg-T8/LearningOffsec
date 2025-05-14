@@ -10,7 +10,7 @@
   - [Anonymizing Internet-Based Traffic](#anonymizing-internet-based-traffic)
     - [Proxychains](#proxychains)
     - [TOR](#tor)
-      - [Routing all traffic through TOR](#routing-all-traffic-through-tor)
+      - [Routing traffice from other applications through TOR](#routing-traffice-from-other-applications-through-tor)
 
 ## Chapter 4. Passive Reconnaissance
 
@@ -186,9 +186,9 @@ Once the connection is established, use https://ifconfig.co to determine if the 
 
 <img src="images/1747217905863.png" alt="TOR Browser IP" width="650"/>
 
-##### Routing all traffic through TOR  
+##### Routing traffice from other applications through TOR
 
-The browser only routes traffic from the TOR browser itself. To route all traffic through TOR, you need to use `proxychains` with the TOR SOCKS proxy:
+To route all traffic from other applications through TOR, you need to use `proxychains` with the TOR SOCKS proxy:
 
 ```bash
 [ProxyList]
