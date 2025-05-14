@@ -10,6 +10,7 @@
   - [Anonymizing Internet-Based Traffic](#anonymizing-internet-based-traffic)
     - [Proxychains](#proxychains)
     - [TOR](#tor)
+      - [Routing all traffic through TOR](#routing-all-traffic-through-tor)
 
 ## Chapter 4. Passive Reconnaissance
 
@@ -185,5 +186,49 @@ Once the connection is established, use https://ifconfig.co to determine if the 
 
 <img src="images/1747217905863.png" alt="TOR Browser IP" width="650"/>
 
-**Note:**  
-- The browser only routes traffic from the TOR browser itself. If you want to route traffic fro any application,
+##### Routing all traffic through TOR  
+
+The browser only routes traffic from the TOR browser itself. To route all traffic through TOR, you need to use `proxychains` with the TOR SOCKS proxy:
+
+```bash
+[ProxyList]
+# add proxy here ...
+# meanwile
+# defaults set to "tor"
+socks4  127.0.0.1 9050    # Uncomment to connect via tor
+
+#socks5  104.168.13.108  1080
+```
+**Note:** Edit using `sudo -E vim /etc/proxychains4.conf`.
+
+Then run the following commands to activate the TOR service:
+
+```bash
+sudo systemctl start tor 
+sudo systemctl status tor
+```
+**Output:**  
+<img src="images/1747219429786.png" alt="TOR Service Status" width="800"/>
+
+Do a quick check to the TOR website:
+
+```bash
+proxychains4 curl https://check.torproject.org
+```
+<img src="images/1747220587680.png" alt="TOR Check" width="600"/>
+
+Then launch firefox through `proxychains`:
+```bash
+proxychains4 firefox
+```
+<img src="images/1747220652145.png" alt="TOR Firefox" width="800"/>
+
+Console output indicates that `proxychains` tunnels connectionsthrough different TOR nodes:
+
+<img src="images/1747220877004.png" alt="TOR Console Output" width="800"/>
+
+When finished, stop the TOR service:
+```bash
+sudo systemctl stop tor
+sudo systemctl status tor
+```
