@@ -4,13 +4,12 @@
 
 <!-- omit in toc -->
 ## Contents
-
 - [Chapter 4. Passive Reconnaissance](#chapter-4-passive-reconnaissance)
   - [Exploring Passive Reconnaissance](#exploring-passive-reconnaissance)
   - [Creating a Sock Puppet](#creating-a-sock-puppet)
   - [Anonymizing Internet-Based Traffic](#anonymizing-internet-based-traffic)
     - [Proxychains](#proxychains)
-
+    - [TOR](#tor)
 
 ## Chapter 4. Passive Reconnaissance
 
@@ -140,3 +139,51 @@ proxychains4 -f /etc/proxychains4.conf firefox
 <img src="images/1746876109281.png" alt="Proxychains Firefox" width="750"/>
 
 **Note:** The public IP address reflects the last IP address used in the proxy list.
+
+#### TOR
+
+TOR enables a user to route their internet-based traffic through multiple nodes, making it difficult to trace back to the original source. TOR is often used for anonymous browsing and accessing hidden services on the dark web.
+
+How it works:
+* When a user sends data through TOR, the TOR app encrypts it in several layers.
+* Each node in the TOR network peels off one layer to find out where to send the data next.
+* This process repeats at each node until it reaches the final exit node.
+* The exit node removes the last layer, finds the real destination, and sends the data there.
+
+The destination will not be able to trace the packet back to the real source, as each TOR node only knows the previous and next nodes in the chain.
+
+TOR's primary goal is anonymity, not security.
+
+Limitations:
+* Slower speeds and higher latency.
+* Exit-nodes can be insecure and traffic could be intercepted.
+* Some websites block TOR exit-node IPs.
+* Nodes can be unreliable since they’re volunteer-run.
+* TOR has legal and ethical risks due to its link to the dark web.
+
+Confirm if you have `torbrowser-launcher` installed:
+```bash
+apt list --installed | grep torbrowser-launcher
+# or
+dpkg -l | grep torbrowser-launcher
+```
+
+Install `torbrowser-launcher` if not already installed:
+```bash
+sudo apt install torbrowser-launcher
+```
+
+Launch the TOR browser:
+```bash
+torbrowser-launcher
+```
+
+When the TOR browser opens, click **Connect**:  
+<img src="images/1747217765342.png" alt="TOR Browser Connect" width="650"/>
+
+Once the connection is established, use https://ifconfig.co to determine if the traffic is being routed through TOR:
+
+<img src="images/1747217905863.png" alt="TOR Browser IP" width="650"/>
+
+**Note:**  
+- The browser only routes traffic from the TOR browser itself. If you want to route traffic fro any application,
