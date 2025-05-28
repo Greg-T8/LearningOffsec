@@ -11,6 +11,9 @@
     - [Proxychains](#proxychains)
     - [TOR](#tor)
       - [Routing traffice from other applications through TOR](#routing-traffice-from-other-applications-through-tor)
+- [Chapter 5. Exploring open-source intelligence](#chapter-5-exploring-open-source-intelligence)
+  - [Domain reconnaissance](#domain-reconnaissance)
+    - [Collecting WHOIS data](#collecting-whois-data)
 
 ## Chapter 4. Passive Reconnaissance
 
@@ -232,3 +235,28 @@ When finished, stop the TOR service:
 sudo systemctl stop tor
 sudo systemctl status tor
 ```
+
+## Chapter 5. Exploring open-source intelligence
+
+### Domain reconnaissance
+
+#### Collecting WHOIS data
+
+The following information can be collected from a WHOIS lookup:
+- Registrant contact information
+- Administrative contact information
+- Technical contact information
+- Name servers
+- Important dates (registration, update, and expiration)
+- Registry domain ID
+- Registrar information
+
+The following resources can be used to perform WHOIS lookups:
+- https://who.is/
+- https://www.whois.com/ 
+- https://lookup.icann.org/
+- https://whois.domaintools.com/
+
+Kali Linux includes the `whois` command-line tool, which can be used to perform WHOIS lookups directly from the terminal:
+
+<img src="images/1748428507862.png" alt="WHOIS Command" width="550"/>
