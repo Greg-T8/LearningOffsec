@@ -14,6 +14,9 @@
 - [Chapter 5. Exploring open-source intelligence](#chapter-5-exploring-open-source-intelligence)
   - [Domain reconnaissance](#domain-reconnaissance)
     - [Collecting WHOIS data](#collecting-whois-data)
+    - [Performing DNS enumeration](#performing-dns-enumeration)
+      - [`dnsrecon`](#dnsrecon)
+      - [Exploiting DNS zone transfer](#exploiting-dns-zone-transfer)
 
 ## Chapter 4. Passive Reconnaissance
 
@@ -251,6 +254,8 @@ The following information can be collected from a WHOIS lookup:
 - Registry domain ID
 - Registrar information
 
+**Note:** If the domain owner pays premium for privacy protection, the WHOIS lookup may not return detailed information about the registrant. Instead, it may show a privacy service or proxy contact information.
+
 The following resources can be used to perform WHOIS lookups:
 - https://who.is/
 - https://www.whois.com/ 
@@ -260,3 +265,24 @@ The following resources can be used to perform WHOIS lookups:
 Kali Linux includes the `whois` command-line tool, which can be used to perform WHOIS lookups directly from the terminal:
 
 <img src="images/1748428507862.png" alt="WHOIS Command" width="550"/>
+
+
+#### Performing DNS enumeration
+
+The following list are trusted DNS providers:
+- Cloudflare: https://1.1.1.1
+- Quad 9: https://www.quad9.net/
+- Cisco OpenDNS: https://www.opendns.com/
+- Google Public DNS: https://developers.google.com/speed/public-dns
+
+##### `dnsrecon`
+
+Use the following command to retreive the DNS records for a domain:
+
+```bash
+dnsrecon -d microsoft.com 1.1.1.1
+```
+<img src="images/1748429215320.png" alt="DNSRecon Output" width="800"/>
+
+
+##### Exploiting DNS zone transfer
