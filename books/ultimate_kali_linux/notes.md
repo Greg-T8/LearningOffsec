@@ -282,7 +282,36 @@ Use the following command to retreive the DNS records for a domain:
 ```bash
 dnsrecon -d microsoft.com 1.1.1.1
 ```
+<details>
 <img src="images/1748429215320.png" alt="DNSRecon Output" width="800"/>
+</details>
+
+Check to see if DNS servers are misconfigured to allow zone transfers:
+
+```bash
+dnsrecon -d microsoft.com -t axfr
+```
+<details>
+<img src="images/1748599664487.png" alt="DNS Zone Transfer Output" width="400"/>
+</details>
+
+Use brute-force to discover subdomains:
+
+```bash
+dnsrecon -d quisitive.com -D subdomains-top1000.txt -t brt
+```
+<details>
+<img src="images/1748599869399.png" alt="Subdomain Discovery Output" width="400"/>
+</details>
+
+Identify Active Directory, SIP, or LDAP endpoints:
+
+```
+dnsrecon -d addomain.local -t srv
+```
+
+**Note:** Use the `-j` option to save the results in JSON format.
+
 
 
 ##### Exploiting DNS zone transfer
