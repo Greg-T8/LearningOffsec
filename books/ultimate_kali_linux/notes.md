@@ -17,6 +17,7 @@
     - [Performing DNS enumeration](#performing-dns-enumeration)
       - [`dnsrecon`](#dnsrecon)
       - [Exploiting DNS zone transfer](#exploiting-dns-zone-transfer)
+    - [Automation using SpiderFoot](#automation-using-spiderfoot)
 
 ## Chapter 4. Passive Reconnaissance
 
@@ -277,6 +278,8 @@ The following list are trusted DNS providers:
 
 ##### `dnsrecon`
 
+`dnsrecon` is a Python-based DNS reconnaissance tool that can be used to perform various types of DNS enumeration.
+
 Use the following command to retreive the DNS records for a domain:
 
 ```bash
@@ -328,3 +331,37 @@ However, zone transfers are still widely used in private/internal networks, e.g.
 In Active Directory networks, when a DNS zone is AD-integrated, its data is stored in Active Directory and replicated to all domain controllers, not using traditional DNS zone transfer methods. Because of this, zone transfers are usually disabled in AD-integrated zones. You can manually enable zone transfers in AD, but it's rare.
 
 In BIND (Berkeley Internet Name Domain), zone transfers are allowed by default unless explicitly restricted. However, admins will typically use a global restriction policy across all zones to prevent zone transfers to unauthorized IPs.
+
+As a result, the possibility of a poorly configured DNS server is almost non-existent in modern networks.
+
+However, you can use https://digi.ninja/ as an environment to check for DNS zone transfer vulnerabilities.
+
+Use the `host` command to retrieve the DNS records of `zonetransfer.me`:
+
+```bash
+host zonetransfer.me
+```
+<img src="images/1748601960580.png" alt="Zone Transfer Output" width="400"/>
+
+Now retrieve the `NS` records for the domain:
+
+```bash
+host -t ns zonetransfer.me
+```
+<img src="images/1748602066072.png" alt="NS Records Output" width="400"/>
+
+Check each of the nameservers to see if they allow zone transfers:
+
+```bash
+host -l zonetransfer.me nsztm2.digi.ninja
+```
+<img src="images/1748602172687.png" alt="Zone Transfer Output" width="500"/>
+
+You can also use the `dnsenum` tool across the targeted domain. This tool will attempt to retrieve all DNS records.
+
+```bash
+dnsenum zonetransfer.me
+```
+<img src="images/1748602919410.png" alt="DNSenum Output" width="500"/>
+
+#### Automation using SpiderFoot
