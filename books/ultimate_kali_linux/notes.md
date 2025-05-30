@@ -313,5 +313,14 @@ dnsrecon -d addomain.local -t srv
 **Note:** Use the `-j` option to save the results in JSON format.
 
 
-
 ##### Exploiting DNS zone transfer
+
+DNS zone transfers are a security risk and are not commonly used today in public DNS services. Most public DNS servers use proprietary replication mechanisms and disable the two types of zone transfers, AXFR (full zone transfer) and IXFR (incremental zone transfer), to prevent unauthorized access to DNS records. 
+
+However, zone transfers are still widely used in private/internal networks, e.g. Active Directory, BIND. 
+
+In Active Directory networks, when a DNS zone is AD-integrated, its data is stored in Active Directory and replicated to all domain controllers, not using traditional DNS zone transfer methods. Because of this, zone transfers are usually disabled in AD-integrated zones. You can manually enable zone transfers in AD, but it's rare.
+
+In BIND (Berkeley Internet Name Domain), zone transfers are allowed by default unless explicitly restricted. However, admins will typically use a global restriction policy across all zones to prevent zone transfers to unauthorized IPs.
+
+
