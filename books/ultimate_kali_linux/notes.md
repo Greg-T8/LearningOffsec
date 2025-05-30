@@ -304,6 +304,12 @@ dnsrecon -d quisitive.com -D subdomains-top1000.txt -t brt
 <img src="images/1748599869399.png" alt="Subdomain Discovery Output" width="400"/>
 </details>
 
+This works by using a wordlist of common subdomains (e.g., `www`, `mail`, `admin`, etc.) to find valid subdomains for the target domain.
+
+The `-D` option specifies the wordlist file. The following screenshot shows the available wordlists:
+
+<img src="images/1748601511341.png" alt="Wordlist File" width="400"/>
+
 Identify Active Directory, SIP, or LDAP endpoints:
 
 ```
@@ -322,5 +328,3 @@ However, zone transfers are still widely used in private/internal networks, e.g.
 In Active Directory networks, when a DNS zone is AD-integrated, its data is stored in Active Directory and replicated to all domain controllers, not using traditional DNS zone transfer methods. Because of this, zone transfers are usually disabled in AD-integrated zones. You can manually enable zone transfers in AD, but it's rare.
 
 In BIND (Berkeley Internet Name Domain), zone transfers are allowed by default unless explicitly restricted. However, admins will typically use a global restriction policy across all zones to prevent zone transfers to unauthorized IPs.
-
-
