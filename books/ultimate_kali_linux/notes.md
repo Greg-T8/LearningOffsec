@@ -17,7 +17,7 @@
     - [Performing DNS enumeration](#performing-dns-enumeration)
       - [`dnsrecon`](#dnsrecon)
       - [Exploiting DNS zone transfer](#exploiting-dns-zone-transfer)
-    - [Automation using SpiderFoot](#automation-using-spiderfoot)
+    - [Automating OSINT using SpiderFoot](#automating-osint-using-spiderfoot)
 
 ## Chapter 4. Passive Reconnaissance
 
@@ -283,35 +283,30 @@ The following list are trusted DNS providers:
 Use the following command to retreive the DNS records for a domain:
 
 ```bash
-dnsrecon -d microsoft.com 1.1.1.1
+dnsrecon -d microsoft.com -n 1.1.1.1
 ```
-<details>
-<img src="images/1748429215320.png" alt="DNSRecon Output" width="800"/>
-</details>
+<img src="images/1748429215320.png" alt="DNSRecon Output" width="1100"/>
+
 
 Check to see if DNS servers are misconfigured to allow zone transfers:
 
 ```bash
 dnsrecon -d microsoft.com -t axfr
 ```
-<details>
 <img src="images/1748599664487.png" alt="DNS Zone Transfer Output" width="400"/>
-</details>
 
 Use brute-force to discover subdomains:
 
 ```bash
-dnsrecon -d quisitive.com -D subdomains-top1000.txt -t brt
+dnsrecon -d microsoft.com -D subdomains-top1000.txt -t brt
 ```
-<details>
-<img src="images/1748599869399.png" alt="Subdomain Discovery Output" width="400"/>
-</details>
+<img src="images/1748599869399.png" alt="Subdomain Discovery Output" width="600"/>
 
 This works by using a wordlist of common subdomains (e.g., `www`, `mail`, `admin`, etc.) to find valid subdomains for the target domain.
 
 The `-D` option specifies the wordlist file. The following screenshot shows the available wordlists:
 
-<img src="images/1748601511341.png" alt="Wordlist File" width="400"/>
+<img src="images/1748601511341.png" alt="Wordlist File" width="500"/>
 
 Identify Active Directory, SIP, or LDAP endpoints:
 
@@ -348,7 +343,7 @@ Now retrieve the `NS` records for the domain:
 ```bash
 host -t ns zonetransfer.me
 ```
-<img src="images/1748602066072.png" alt="NS Records Output" width="400"/>
+<img src="images/1748602066072.png" alt="NS Records Output" width="350"/>
 
 Check each of the nameservers to see if they allow zone transfers:
 
@@ -364,4 +359,34 @@ dnsenum zonetransfer.me
 ```
 <img src="images/1748602919410.png" alt="DNSenum Output" width="500"/>
 
-#### Automation using SpiderFoot
+#### Automating OSINT using SpiderFoot
+
+SpiderFoot is a popular OSINT tool that helps reduce time on collecting and analyzing domain-related information.
+
+```bash
+╭─( ~/LearningOffsec [main…]
+╰╴% spiderfoot -l 0.0.0.0:1234 
+
+*************************************************************
+ Use SpiderFoot by starting your web browser of choice and 
+ browse to http://127.0.0.1:1234
+*************************************************************
+
+2025-06-18 05:06:33,996 [INFO] sf : Starting web server at 0.0.0.0:1234 ...
+2025-06-18 05:06:34,005 [WARNING] sf : 
+********************************************************************
+Warning: passwd file contains no passwords. Authentication disabled.
+Please consider adding authentication to protect this instance!
+Refer to https://www.spiderfoot.net/documentation/#security.
+********************************************************************
+```
+
+The `-l` option specifies the IP address and port number for the SpiderFoot web interface, where `0.0.0.0` means it will listen on all available interfaces.
+
+Once launched, navigate to http://127.0.0.1:1234 to access the SpiderFoot web interface.
+
+<img src="images/1750241385131.png" alt="SpiderFoot Web Interface" width="800"/>
+
+The SpiderFoot web interface showing scan options:
+
+<img src="images/1750241707326.png" alt="SpiderFoot Scan Options" width="800"/>
