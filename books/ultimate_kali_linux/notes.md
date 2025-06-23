@@ -18,6 +18,9 @@
       - [`dnsrecon`](#dnsrecon)
       - [Exploiting DNS zone transfer](#exploiting-dns-zone-transfer)
     - [Automating OSINT using SpiderFoot](#automating-osint-using-spiderfoot)
+  - [Subdomain harvesting](#subdomain-harvesting)
+    - [Enumeration with DNSMap](#enumeration-with-dnsmap)
+    - [Subdomain discovery with Knockpy](#subdomain-discovery-with-knockpy)
 
 ## Chapter 4. Passive Reconnaissance
 
@@ -402,3 +405,23 @@ View of the types of data collected:
 Another view of the data:
 
 <img src="images/1750671948226.png" alt="SpiderFoot Data Collected - Another View" width="800"/>
+
+### Subdomain harvesting
+
+#### Enumeration with DNSMap
+
+`dnsmap` attempts to enumerate subdomains by querying a built-in wordlist. It is similar to `dnsrecon` but is purpose-built for discovering subdomains via brute-force.
+
+```bash
+dnsmap domain.com     
+```
+<img src="images/1750673194679.png" alt="DNSMap Output" width="500"/>
+
+#### Subdomain discovery with Knockpy
+
+`knockpy` is a Python-based subdomain enumeration tool that uses OSINT techniques and data sources, such as search engines and internet indexing platforms.
+
+```bash
+knockpy --recon --dns 8.8.8.8 -d quisitive.com
+```
+<img src="images/1750673387131.png" alt="Knockpy Output" width="500"/>
