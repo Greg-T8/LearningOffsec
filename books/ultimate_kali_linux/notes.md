@@ -21,6 +21,9 @@
   - [Subdomain harvesting](#subdomain-harvesting)
     - [Enumeration with DNSMap](#enumeration-with-dnsmap)
     - [Subdomain discovery with Knockpy](#subdomain-discovery-with-knockpy)
+  - [Identifying organizational infrastructure](#identifying-organizational-infrastructure)
+    - [Finding vulnerable systems using Shodan](#finding-vulnerable-systems-using-shodan)
+    - [Discovering exposted systems with Censys](#discovering-exposted-systems-with-censys)
 
 ## Chapter 4. Passive Reconnaissance
 
@@ -425,3 +428,24 @@ dnsmap domain.com
 knockpy --recon --dns 8.8.8.8 -d quisitive.com
 ```
 <img src="images/1750673387131.png" alt="Knockpy Output" width="500"/>
+
+
+### Identifying organizational infrastructure
+
+#### Finding vulnerable systems using Shodan
+
+Shodan is a search engine that indexes devices connected to the internet, including servers, routers, webcams, and other IoT devices. It allows users to search for specific devices or services based on various criteria.
+
+https://www.shodan.io/
+
+Shodan can help you gather OSINT data without having to directly engage a target.
+
+<img src="images/1750675163117.png" alt="Shodan Output" width="850"/>
+
+#### Discovering exposted systems with Censys
+
+Censys is another search engine that indexes devices and services on the internet. It provides detailed information about the devices, including their IP addresses, protocols, and security configurations.
+
+https://search.censys.io/
+
+<img src="images/1750675351931.png" alt="Censys Output" width="650"/>
