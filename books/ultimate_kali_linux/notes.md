@@ -389,4 +389,16 @@ Once launched, navigate to http://127.0.0.1:1234 to access the SpiderFoot web in
 
 The SpiderFoot web interface showing scan options:
 
-<img src="images/1750241707326.png" alt="SpiderFoot Scan Options" width="800"/>
+<img src="images/1750241707326.png" alt="SpiderFoot Scan Options" width="1000"/>
+
+Even a passive scan can take several hours to complete:
+
+<img src="images/1750671697503.png" alt="SpiderFoot Passive Scan" width="800"/>
+
+View of the types of data collected:
+
+<img src="images/1750671786468.png" alt="SpiderFoot Data Collected" width="800"/>
+
+Another view of the data:
+
+<img src="images/1750671948226.png" alt="SpiderFoot Data Collected - Another View" width="800"/>
